@@ -1,14 +1,21 @@
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, Button } from "react-native";
 import { useState } from "react";
 import { Text, View } from "../components/Themed";
 import { Picker } from "@react-native-picker/picker";
+import { useDispatch } from "react-redux";
+import credit from "../redux/actions/credit";
+import debit from "../redux/actions/debit";
 
 export default function TabTwoScreen() {
   const [selectedValue, setSelectedValue] = useState("credit");
   const [debitType, setDebitType] = useState("irreversible");
   const [accountName, setAccountName] = useState("sbi");
   const [number, onChangeNumber] = useState(null);
-
+  const dispatch = useDispatch();
+  const onButtonPress = () => {
+    selectedValue === "credit" &&
+      dispatch(credit({ amount: number, bank: accountName }));
+  };
   return (
     <View style={styles.container}>
       <Picker
@@ -50,17 +57,28 @@ export default function TabTwoScreen() {
         <Picker.Item label="ICICI" value="icici" />
       </Picker>
       <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
 
-<TextInput
+      <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
         placeholder="useless placeholder"
         keyboardType="numeric"
+      />
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
+      <Button
+        onPress={onButtonPress}
+        title="Submit"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
       />
     </View>
   );
@@ -80,5 +98,13 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  input: {
+    color: "black",
+    borderWidth: 5,
+    borderColor: "black",
+    borderRadius: 5,
+    width: "50%",
+    padding: 10,
   },
 });

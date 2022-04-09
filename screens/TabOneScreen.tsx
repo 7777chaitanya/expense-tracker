@@ -1,22 +1,28 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
-import { RootTabScreenProps } from '../types';
+import EditScreenInfo from "../components/EditScreenInfo";
+import { Text, View } from "../components/Themed";
+import { RootTabScreenProps } from "../types";
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-  const sbiBalance = 5000;
-  const iciciBalance = 6000;
-  return (
-    <View style={styles.container}>
+export default function TabOneScreen({
+  navigation,
+}: RootTabScreenProps<"TabOne">) {
+  const sbiBalance = useSelector((state) => state.accountBalance.sbiAccountBalance);
+  const iciciBalance = useSelector((state) => state.accountBalance.iciciAccountBalance);
+  console.log("re-rendered", sbiBalance)
+   return ( <View style={styles.container}>
       <Text style={styles.title}>SBI</Text>
       <Text style={styles.title}>{sbiBalance}</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
 
       <Text style={styles.title}>ICICI</Text>
 
       <Text style={styles.title}>{iciciBalance}</Text>
-
     </View>
   );
 }
@@ -24,16 +30,16 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });
