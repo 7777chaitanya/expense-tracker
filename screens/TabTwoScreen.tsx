@@ -15,6 +15,8 @@ export default function TabTwoScreen() {
   const onButtonPress = () => {
     selectedValue === "credit" &&
       dispatch(credit({ amount: number, bank: accountName }));
+    selectedValue === "debit" &&
+      dispatch(debit({ amount: number, bank: accountName }));
   };
   return (
     <View style={styles.container}>
@@ -66,7 +68,7 @@ export default function TabTwoScreen() {
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
-        placeholder="useless placeholder"
+        placeholder="Enter amount here"
         keyboardType="numeric"
       />
       <View
